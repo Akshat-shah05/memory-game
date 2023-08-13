@@ -4,12 +4,12 @@ import {nanoid} from 'nanoid'
 import Card from './components/Card'
 
 const cardImages = [ 
-    {"src": "/assets/helmet-1.png"},
-    {"src": "/assets/potion-1.png"},
-    {"src": "/assets/ring-1.png"},
-    {"src": "/assets/scroll-1.png"},
-    {"src": "/assets/shield-1.png"},
-    {"src": "/assets/sword-1.png"} 
+    {"src": "/assets/helmet-1.png", matched: false},
+    {"src": "/assets/potion-1.png", matched: false},
+    {"src": "/assets/ring-1.png", matched: false},
+    {"src": "/assets/scroll-1.png", matched: false},
+    {"src": "/assets/shield-1.png", matched: false},
+    {"src": "/assets/sword-1.png", matched: false} 
   ]
 
 function App() {
@@ -34,7 +34,30 @@ function App() {
   }
 
   // compare with useEffect
-  useEffect()
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      
+      if(choiceOne.src === choiceTwo.src) {
+        setCards(prevCards => {
+          return prevCards.map(card => {
+            if (card.src === choiceOne.src) {
+              return {...card, matched: true}
+            } else {
+              return card
+            }
+          })
+        })
+
+        resetTurn()
+      } 
+      
+      else {
+        resetTurn()
+        }
+    }
+  }, [choiceOne, choiceTwo])
+
+  console.log(cards)
 
   // const reset turn
   const resetTurn = () => {
