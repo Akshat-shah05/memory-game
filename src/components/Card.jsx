@@ -5,7 +5,9 @@ const Card = (props) => {
 
     
   const handleClick = () => {
-    props.handleChoice(props.card)
+    if(!props.disabled){
+        props.handleChoice(props.card)
+    }
   }
 
   return (
