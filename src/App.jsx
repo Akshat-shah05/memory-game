@@ -2,6 +2,7 @@ import './App.css'
 import { useState, useEffect } from 'react'
 import {nanoid} from 'nanoid'
 import Card from './components/Card'
+import Confetti from 'react-confetti'
 
 const cardImages = [ 
     {"src": "/assets/helmet-1.png", matched: false},
@@ -25,6 +26,8 @@ function App() {
       .sort(() => Math.random() - 0.5)
       .map((card) => ({...card, id: nanoid()}))
 
+    setChoiceOne(null)
+    setChoiceTwo(null)
     setCards(shuffledCards)
     setTurns(0) // every time we shuffle the cards, we're starting a new game, so reset turns to 0
   }
@@ -36,9 +39,10 @@ function App() {
 
   // compare with useEffect
   useEffect(() => {
-    setDisabled(true)
+    
     if (choiceOne && choiceTwo) {
-      
+      setDisabled(true)
+
       if(choiceOne.src === choiceTwo.src) {
         setCards(prevCards => {
           return prevCards.map(card => {
@@ -59,8 +63,6 @@ function App() {
     }
   }, [choiceOne, choiceTwo])
 
-  console.log(cards)
-
   // const reset turn
   const resetTurn = () => {
     setChoiceOne(null)
@@ -69,6 +71,10 @@ function App() {
     setDisabled(false)
   }
 
+  // Start a new game automatically (don't have to press new game when they first load the page)
+  useEffect(() => {
+    shuffleCards()
+  }, [])
 
   const cardGrid = cards.map(card => {
     return (
@@ -89,6 +95,7 @@ function App() {
       <div className="card-grid"> 
         {cardGrid}
       </div>
+      <p>turns: {turns}</p>
     </div>
   )
 }
