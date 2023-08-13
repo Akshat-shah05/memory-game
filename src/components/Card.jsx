@@ -10,7 +10,7 @@ const Card = (props) => {
 
   return (
     <div className="card">
-        <div>
+        <div className={flipped && "flipped"}>
             <img className="front" src={props.card.src} alt="card-front"/>
             <img 
                 className="back" 
